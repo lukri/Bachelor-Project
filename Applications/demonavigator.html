@@ -22,10 +22,10 @@
         }
         
         function openThis(linkElement){
-            var folder = "Applications";
+            //var folder = "Applications";
             var subfolder = linkElement.parentNode.parentNode.parentNode.childNodes[0].innerHTML;
             var file = linkElement.innerHTML;
-            var link = folder+"/"+subfolder+"/"+file;
+            var link = subfolder+"/"+file;
             openLink(link);
         }    
     </script>
