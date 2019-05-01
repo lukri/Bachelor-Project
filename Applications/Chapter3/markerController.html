@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bachelor Project Chapter 3: Marker as Controller</title>
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+<meta charset="utf-8"/>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+}
+#container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
+}
+#debugCanvas {
+  position: absolute;
+  z-index: 999;
+  opacity: 0.5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+  It is loading...
+  <canvas id="debugCanvas"></canvas>
+<div id="container"></div>
+<script type="text/javascript" src="third-party/awe-v8.js"></script>
+<script type="text/javascript" src="third-party/awe-loader.js"></script>
+<script src="third-party/dat.gui.min.js"></script>
+
+<script type="text/javascript">
+//DEBUG = false;
+
+  var markerPoi = null;
+  var markerMatrix = null;
+  var markerRotation = null;
+  var ball = null;
+
+
+  var animate = function () {
+    requestAnimationFrame( animate );
+    if(markerPoi!=null && markerPoi.visible && ball!=null){
+      var markerZRot = markerRotation.setFromRotationMatrix(markerMatrix).z
+      var x = ball.position.x + markerZRot * 4;
+      if(x>-40 && x<40){
+        ball.update({position:{x:x}})
+      }
+    }
+  };
+
+	animate();
+
+  window.addEventListener('load', function() {
+    window.awe.init({
+      device_type: awe.AUTO_DETECT_DEVICE_TYPE,
+      settings: {
+      	container_id: 'container',
+        default_camera_position: { x:0, y:0, z:0 },
+        default_lights:[
+          {
+            id: 'hemi',
+            type: 'hemisphere',
+            color: 0xCCCCCC,
+          },
+        ],
+      },
+      ready: function() {
+        var d = '?_='+Date.now();
+        
+        awe.util.require([
+          {
+            capabilities: ['gum','webgl'],
+            files: [ 
+              // base libraries
+              ['third-party/awe-standard-dependencies.js', 'third-party/awe-standard.js'+d],
+              // plugin dependencies
+              ['third-party/awe-jsartoolkit-dependencies.js','third-party/plugins/StereoEffect.js', 'third-party/plugins/VREffect.js'],
+              // plugins
+              ['third-party/awe.marker_ar.js'+d,'third-party/plugins/awe.rendering_effects.js'+d]
+            ],
+            success: function() { 
+							awe.setup_scene();
+			        
+							awe.settings.update({data:{value: 'ar'}, where:{id: 'view_mode'}})
+							
+              /*
+                Binding a POI to a jsartoolkit marker is easy
+                - First add the awe-jsartoolkit-dependencies.js plugin (see above)
+                - Then select a marker image you'd like to use
+                - Then add the matching number as a suffix for your POI id (e.g. _64)
+                NOTE: See 64.png in this directory or https://github.com/kig/JSARToolKit/blob/master/demos/markers
+                This automatically binds your POI to that marker id - easy!
+              */
+			        awe.pois.add({ id:'jsartoolkit_marker_64'});
+              
+              markerPoi = awe.pois.view('jsartoolkit_marker_64');
+              markerMatrix = markerPoi.get_mesh().matrix;
+              markerRotation = new THREE.Euler();
+              //awe.pois.add({ id:'marker', rotation: { x:0, y:0, z:0 }, position: { x:0, y:0, z:-250 }, visible: true });
+              awe.pois.add({ id:'marker', rotation: { x:0, y:180, z:180 }},{ poi_id: 'jsartoolkit_marker_64' });
+              
+              
+              
+              awe.projections.add({ 
+			          id:'marker_wall_projection', 
+								geometry: { shape: 'cube', x:50, y:50, z:5 },
+                position: { x:0, y:0, z:0 },
+                rotation: { x:0, y:0, z:0 },
+			          material:{ type: 'phong', color: '#00B2FF' }, 
+			        }, { poi_id: 'marker' });
+
+
+
+              awe.projections.add({ 
+			          id:'ground', 
+								geometry: { shape: 'cube', x:100, y:5, z:50 },
+                position: { x:0, y:-25, z:25 },
+                rotation: { x:0, y:0, z:0 },
+			          material:{ type: 'phong', color: '#0b6623' }, 
+			        }, { poi_id: 'marker' });
+			        
+			        
+              awe.projections.add({ 
+			          id:'ball', 
+                geometry:{ shape:'sphere', radius:10 }, 
+                position: { x:40, y:-12, z: 25 },
+			          material:{ type: 'phong', color:0xCCCCCC},
+			        }, { poi_id: 'marker' });
+              ball = awe.projections.view('ball')
+
+
+			        awe.plugins.view('render_effects').enable();
+			        awe.plugins.view('jsartoolkit').enable();
+			      },
+          },
+          {
+            capabilities: [],
+            success: function() { 
+		          document.body.innerHTML = '<p>Try this demo in the latest version of Chrome or Firefox on a PC or Android device</p>';
+            },
+          },
+        ]);
+      }
+    });
+  });
+</script>
+</body>
+</html>

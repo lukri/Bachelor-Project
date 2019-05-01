@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>Bachelor Project Chapter 2: Manipulating Objects</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="third-party/three.min.js"></script>
+		<script src="third-party/dat.gui.min.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			var material = new THREE.MeshBasicMaterial( { color: '#ffae23', wireframe: false } );
+			var cube = new THREE.Mesh( geometry, material );
+			scene.add( cube );
+
+			camera.position.z = 5;
+
+			/* new code from here... */
+
+			var panel = new dat.GUI( { width: 310 } );
+			var folder1 = panel.addFolder( 'Visibility' );
+			var folder2 = panel.addFolder( 'Position' );
+			var folder3 = panel.addFolder( 'Rotation' );
+			var folder4 = panel.addFolder( 'Scaling' );
+			var folder5 = panel.addFolder( 'Material' );
+			settings = {
+				'show cube': true,
+				'x position': 0.1,
+				'rotation speed x': 0.01,
+				'rotation speed y': 0.01,
+				'scaling factor': 1.0,
+				'material color': [ 14, 110, 19 ],
+				'material use wireframe': false,
+			};
+
+			folder1.add( settings, 'show cube' ).onChange( showCube );
+			folder2.add( settings, 'x position', -2,2 ).onChange( changeXPos );
+			folder3.add( settings, 'rotation speed x', 0,0.1 );
+			folder3.add( settings, 'rotation speed y', 0,0.1 );
+			folder4.add( settings, 'scaling factor', 0.1,2 ).onChange( scalingCube );
+			folder5.addColor( settings, 'material color' ).onChange( changeMaterial );
+			folder5.add( settings, 'material use wireframe' ).onChange( changeMaterial );
+
+			folder1.open();
+			folder2.open();
+			folder3.open();
+			folder4.open();
+			folder5.open();
+
+			function showCube( visibility ) {
+				cube.visible = visibility;
+			}
+			function changeXPos( xPos ){
+				cube.position.x = xPos;
+			}
+			function scalingCube( scalingFactor ){
+				cube.scale.x = cube.scale.y = cube.scale.z = scalingFactor;
+			}
+			function changeMaterial(){
+				var rgb = settings['material color'];
+				material.color.setRGB(rgb[0]/255,rgb[1]/255,rgb[2]/255);
+				material.wireframe = settings['material use wireframe'].valueOf();
+			}
+			changeMaterial(); //update material
+			/*...to here*/
+
+
+
+			var animate = function () {
+				requestAnimationFrame( animate );
+
+				cube.rotation.x += settings['rotation speed x'].valueOf();
+				cube.rotation.y += settings['rotation speed y'].valueOf();
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+		</script>
+	</body>
+</html>

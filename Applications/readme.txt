@@ -1,0 +1,2 @@
+To see and navigate the applications, please open the file index.html.
+For more details please read the introduction or the chapter about "Google Cardboard AR demo" in the section "Final Demo" in the documentation.

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bachelor Project Application Navigator</title>
+    </head>
+<body>
+
+<h1>Bachelor Project: AR Demo with Google Cardboard based on JavaScript</h1>
+by Lukas D. Riesen in April 2019
+
+<h2>Application Navigator</h2>
+<!-- TODO: documentation link -->
+The following list contains the links to the code and therefore to the applications accordingly described in the <a href="../Document/Print/BA_LRiesen_ARdemoGCnJS.pdf" target="_blank">documentation</a>.
+<br> For reproduction reasons the downloaded JavaScript libraries can be found at <a href="../Source/third-party/" target="_blank">../Source/third-party/</a>
+
+<ul> 
+    <li><h3>Chapter 1: Introduction</h3>
+        <b>Background and Motivation:</b> <a href="Chapter1/">Deprecated GitHub Repository of Awe.js</a>
+        <br>
+        There are HTML-files located in the sub-directories of the folder <i>examples</i> which act as executable files in the browser.
+        The repository was downloaded from <a href="https://github.com/awe-media/awe.js/tree/deprecated" target="_blank">https://github.com/awe-media/awe.js/tree/deprecated</a>
+    </li>
+    <li><h3>Chapter 2: WebGL Rendering Library</h3>
+        The library JavaScript file <i>three.min.js</i> and the other needed files from 
+        <a href="https://threejs.org/" target="_blank">https://threejs.org/</a> are placed in the sub-directory <i>third-party</i> of <i>Chapter2</i>.
+        <br>Testing the browser WebGL support on <a href="https://get.webgl.org" target="_blank">https://get.webgl.org</a>
+        
+        
+        <p> <b>Base Code:</b>
+            <a href="Chapter2/baseCode.html">baseCode.html</a> was created accordingly to the 
+            <a href="https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene" target="_blank">three.js documentation creating a scene</a>.
+            <br>can be run directly locally meaning that the files can be called by their path in the browser
+        </p>
+        <p> <b>Loading Objects:</b>
+            <a href="Chapter2/baseCodeExtendedObject.html">baseCodeExtendedObject.html</a> used the example 
+            <a href="https://threejs.org/examples/?q=obj#webgl_loader_obj" target="_blank">webgl_loader_obj</a> as model. Its source can be found on 
+            <a href="https://github.com/mrdoob/three.js/blob/master/examples/webgl_loader_obj.html" target="_blank">GitHub</a>
+            <br>needs to be run on a server
+        </p>
+        <p> <b>Loading Textures:</b>
+            <a href="Chapter2/baseCodeExtendedTexture.html">baseCodeExtendedTexture.html</a> using 
+            <a href="https://threejs.org/docs/#api/en/loaders/TextureLoader" target="_blank">TextureLoader</a>
+            <br>needs to be run on a server
+        </p>
+        <p> <b>Materials and Lights:</b>
+            <a href="Chapter2/baseCodeExtendedMaterialAndLight.html">baseCodeExtendedMaterialAndLight.html</a> added code according to 
+            <a href="https://aerotwist.com/tutorials/getting-started-with-three-js/" target="_blank">Aerotwist - Getting Started with Three.js</a>
+            <br>can be run directly locally
+        </p>
+        <p> <b>Manipulating Objects:</b>
+            <a href="Chapter2/baseCodeExtendedManipulation.html">baseCodeExtendedManipulation.html</a> inspired by 
+            <a href="https://threejs.org/examples/#webgl_animation_skinning_blending" target="_blank">webgl_animation_skinning_blending</a> and
+            <a href="https://threejs.org/examples/#webgl_animation_skinning_morph" target="_blank">webgl_animation_skinning_morph</a>
+            <br>can be run directly locally
+        </p>
+
+
+    </li>
+    <li><h3>Chapter 3: AR Library</h3>
+        The following application can be run locally, on http://localhost or on a server with HTTPS.
+        <br> For the testing it is important to have the marker <a href="Chapter3/third-party/64.png" target="_blank">64.png</a> printed out and the device has a camera.
+        <br> Try to hold the marker in different positions and places to see the limitations...
+        <br> however the intended idea for most of the following applications is to hold it like reading a book.
+        <br> Loading can take a bit of time.
+        <p>
+            <b>Base Code:</b>
+            <a href="Chapter3/baseCode.html">baseCode.html</a> is based on 
+            <a href="Chapter1/examples/marker_ar/index.html" target="_blank">aw.js marker_ar example</a> from Chapter 1.
+        </p>
+        <p>
+            <b>Building Enhanced Scene:</b>
+            <a href="Chapter3/enhancedScene.html">enhancedScene.html</a> 
+        </p>
+        <p>
+            <b>Marker as Controller:</b>
+            <a href="Chapter3/markerController.html">markerController.html</a> 
+        </p>
+    </li>
+    <li><h3>Chapter 4: Google Cardboard AR demo</h3>
+        Same preconditions as for chapter 3. Additional a Google Cardboard with a hole for the device camera is needed.
+        <p>
+            <b>Fullscreen:</b>
+            <a href="Chapter4/fullscreen.html">fullscreen.html</a> derived from
+            <a href="Chapter3/markerController.html" target="_blank">markerController.html</a> from Chapter 3.
+        </p>
+        <p>
+            <b>Stereoscopic View:</b>
+            <a href="Chapter4/stereoscopicView.html">stereoscopicView.html</a> toggle jsartoolkit registration to load split view. 
+            <br>this example demonstrates the problem.
+        </p>
+        <p>
+            <b>Workaround:</b>
+            <a href="Chapter4/workaround.html">workaround.html</a> toggle jsartoolkit registration to load split view.
+            <br>in this example marker detection works after setting jsartoolkit back to registration. 
+        </p>
+        <p>
+            <b>Final Demo:</b>
+            <a href="Chapter4/finalDemo.html">finalDemo.html</a>
+            <br>Description on how to use it in documentation.
+        </p>
+        
+    </li>
+</ul>
+
+<br><br><br><br>
+
+</body>
+</html>
